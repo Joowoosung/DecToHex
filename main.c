@@ -3,69 +3,6 @@
 #include <string.h>
 #include "bigint.h"
 
-int hex_dec(char* hex, char* dec) {
-
-    char bal[10][100];
-    double tmp[10];
-    int i = 0, j = 0, len = 0, bal_len[10] = { 0, };
-    int step = 0, hex_len = 0;
-    int isLong = 0;
-    double digit[10] = { 1.0, };
-    double ret = 0.0;
-
-    len = strlen(hex);
-    memset(&bal, 0x00, sizeof(bal));
-    if (len > 10) {
-        if ((len - 2) % 6 > 3) {
-            step = (len - 2) / 6;
-        }
-        else {
-            step = ((len - 2) / 6) - 1;
-        }
-        for (j = 0; j < step + 1; j++) {
-            
-            if (j == step) {
-                strncpy_s(bal[j], 100, hex + hex_len + 2, strlen(hex) - hex_len - 2);
-                hex_len += (strlen(hex) - hex_len - 2 );
-            }
-            else if (j == 0) {
-                strncpy_s(bal[0], 100, hex + 2, 6);
-                hex_len += 6;
-            }
-            else {
-                strncpy_s(bal[1], 100, hex + hex_len + 2, 6);
-                hex_len += 6;
-            }
-            digit[step - j] = 0.000000000000000001;
-            printf("%d\n", hex_len - 6);
-            for (i = 0; i < hex_len - 6; i++) {
-                digit[step - j] *= 16;
-            }
-            
-        }
-        isLong = 1;
-    }
-    if (isLong) {
-        for (j = 0; j < step + 1; j++) {
-            printf("bal[%d] = %s / digits[%d] = %.18lf, bal_len[%d] = %d\n", j, bal[j], j, digit[j], j, bal_len[j]);
-            tmp[j] = (double)strtol((const char*)bal[j], NULL, 16);
-            printf("bal[%d] = %.18lf, digit[%d] = %.18lf\n", j, tmp[j], j, digit[j]);
-            tmp[j] = tmp[j] * digit[j];
-            printf("bal[%d] = %.18lf\n", j, tmp[j]);
-            //log_debug("!!!! %.8lf * %.8lf = %.8lf", tmp1, tmp2, tmp1 + tmp2);
-            ret += tmp[j];
-        }
-        sprintf_s(hex, 100, "%.4lf", ret);
-    }
-    else {
-        tmp[0] = (double)strtol((const char*)hex, NULL, 16);
-        sprintf_s(hex, 100, "%.4lf", tmp[0] * 0.000000000000000001);
-    }
-    strcpy_s(dec, 100, hex);
-
-    return 1;
-}
-
 int hex_dec2(char* hex, char* dec) {
 
     double tmp;
