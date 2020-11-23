@@ -50,7 +50,7 @@ int dec_hex(char* bin, char* hex) {
     memset(&bal, 0x00, sizeof(bal));
     len = strlen(bin);
     chg = len % 4;
-    printf("len = %d chg = %d\n", len, chg);
+    //printf("len = %d chg = %d\n", len, chg);
     for (i = 0; i < (len / 4) + 1; i++) {
         if (len % 4 != 0) {
             if (i == 0) {
@@ -73,7 +73,7 @@ int dec_hex(char* bin, char* hex) {
             }
             else {
                 c = chg + (4 * (i - 1));
-                printf("자릿수 : %d", c);
+                //printf("자릿수 : %d", c);
                 strncpy_s(bal[i], 5, bin + c, 4);
             }
             index++;
@@ -85,7 +85,7 @@ int dec_hex(char* bin, char* hex) {
             strncpy_s(bal[i], 5, bin + (4 * i), 4);
             index++;
         }
-        printf("bal[%d] = %s\n", i, bal[i]);
+        //printf("bal[%d] = %s\n", i, bal[i]);
     }
 
     hex[0] = '0';
@@ -136,31 +136,44 @@ int dec_hex(char* bin, char* hex) {
     return 1;
 }
 
-int main() {
-    char hex[100] = "0x662eeb62b696d4000";
-    char dec[100];
-    char input[201] = "1000000000000000000";
+int dec_hex2(char* dec, char* hex) {
     char ret[256];
     char decToHex[100];
-
+    char bigDec[256];
     memset(&ret, 0x00, sizeof(ret));
     memset(&decToHex, 0x00, sizeof(decToHex));
+    memset(&bigDec, 0x00, sizeof(bigDec));
 
-    makeBinary(input, ret);
+    makeBigInt(dec, bigDec);
 
-    printf("%s\n", ret);
+    printf("dec to bigInt = %s\n", bigDec);
+
+    makeBinary(bigDec, ret);
 
     reverseChar(ret, strlen(ret));
 
-    printf("reversed = %s\n", ret);
-
     dec_hex(ret, decToHex);
 
-    printf("dec to hex result = %s\n", decToHex);
+    strcpy_s(hex, 100, decToHex);
 
+    return 0;
+}
+
+int main() { // 이더리움 지갑 만들면서 16진수 변환 및 큰 정수 관련 함수가 필요해서 만듬
+    char hex[100] = "0xc9f2c9cd04675000000000000";
+    char dec[201];
+    
+    char decToHex[100];
+
+    memset(&decToHex, 0x00, sizeof(decToHex));
+    
     hex_dec2(hex, dec);
 
     printf("hex = %s / dec = %s\n", hex, dec);
+
+    dec_hex2(dec, decToHex);
+
+    printf("dec to hex result = %s\n", decToHex);
 
     return 0;
 }

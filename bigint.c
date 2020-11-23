@@ -14,6 +14,87 @@ int reverseChar(char* a,int len) {
 
 }
 
+int makeBigInt(char input[201], char* ret)
+{
+	char input2[201] = "1000000000000000000";
+	char tmp[201];
+	char operation;
+	int i, j, k = 0;
+	int cnt = 0;
+	struct BigNum object[6];
+	j = 0;
+	enter_number(input, &object[0]);
+	
+	memset(&tmp, 0x00, sizeof(tmp));
+	for (;;)
+	{
+			enter_number(input2, &object[1]);
+			multiple(&object[0], &object[1], &object[2]);
+			//printf("결과를 출력합니다. \n");
+			if (object[2].sign < 0)
+			{
+				//printf("-");
+			}
+			if (object[2].i_total_digit > 100)
+			{
+				for (i = 0; i < object[2].i_total_digit - 100; i++)
+				{
+					//printf("%d", object[2].i_digit_add[object[2].i_total_digit - 100 - 1 - i]);
+				}
+				for (i = 0; i < 100; i++)
+				{
+					//printf("%d", object[2].i_digit[99 - i]);
+				}
+			}
+			else
+			{
+				for (i = 0; i < object[2].i_total_digit; i++)
+				{
+					//printf("%d", object[2].i_digit[object[2].i_total_digit - i - 1]);
+				}
+			}
+			if (object[2].d_total_digit > 0)
+			{
+				//printf(".");
+			}
+			if (object[2].d_total_digit > 100)
+			{
+				for (i = 0; i < 100; i++)
+				{
+					//printf("%d", object[2].d_digit[99 - i]);
+				}
+				for (i = 0; i < object[2].d_total_digit - 100; i++)
+				{
+					//printf("%d", object[2].d_digit_add[object[2].d_total_digit - 100 - 1 - i]);
+				}
+			}
+			else
+			{
+				for (i = 0; i < object[2].d_total_digit; i++)
+				{
+					//printf("%d", object[2].d_digit[object[2].d_total_digit - i - 1]);
+				}
+			}
+			//printf("\n");
+			object[3] = object[0];
+			object[0] = object[2];
+			
+			for (i = 0; i < object[0].i_total_digit; i++)
+			{
+				if(i == 0 )
+					sprintf_s(tmp, 2, "%d", object[0].i_digit[object[0].i_total_digit - i - 1]);
+				else
+					sprintf_s(tmp, 2+i ,"%s%d", tmp, object[0].i_digit[object[0].i_total_digit - i - 1]);
+				
+			}
+			
+			
+			strcpy_s(ret, 201, tmp);
+			break;
+	}
+	return 0;
+}
+
 
 int makeBinary(char input[201], char* ret)
 {
@@ -39,66 +120,66 @@ int makeBinary(char input[201], char* ret)
 			}
 			else
 			{
-				printf("연산 가능한 범위를 벗어납니다. \n");
+				//printf("연산 가능한 범위를 벗어납니다. \n");
 				continue;
 			}
-			printf("결과를 출력합니다. \n");
+			//printf("결과를 출력합니다. \n");
 			if(object[2].sign < 0)
 			{
-				printf("-");
+				//printf("-");
 			}
 			if(object[2].i_total_digit>100)
 			{
 				for(i=0;i<object[2].i_total_digit-100;i++)
 				{
-					printf("%d", object[2].i_digit_add[object[2].i_total_digit-100-1-i]);
+					//printf("%d", object[2].i_digit_add[object[2].i_total_digit-100-1-i]);
 				}
 				for(i=0;i<100;i++)
 				{
-					printf("%d", object[2].i_digit[99-i]);
+					//printf("%d", object[2].i_digit[99-i]);
 				}
 			}
 			else
 			{
 				for(i=0;i<object[2].i_total_digit;i++)
 				{
-					printf("%d", object[2].i_digit[object[2].i_total_digit-i-1]);
+					//printf("%d", object[2].i_digit[object[2].i_total_digit-i-1]);
 				}
 			}
 			if(object[2].d_total_digit>0)
 			{
-				printf(".");
+				//printf(".");
 			}
 			if(object[2].d_total_digit>100)
 			{
 				for(i=0;i<100;i++)
 				{
-					printf("%d", object[2].d_digit[99-i]);
+					//printf("%d", object[2].d_digit[99-i]);
 				}
 				for(i=0;i<object[2].d_total_digit-100;i++)
 				{
-					printf("%d", object[2].d_digit_add[object[2].d_total_digit-100-1-i]);
+					//printf("%d", object[2].d_digit_add[object[2].d_total_digit-100-1-i]);
 				}
 			}
 			else
 			{
 				for(i=0;i<object[2].d_total_digit;i++)
 				{
-					printf("%d", object[2].d_digit[object[2].d_total_digit-i-1]);
+					//printf("%d", object[2].d_digit[object[2].d_total_digit-i-1]);
 				}
 			}
-			printf("\n");
+			//printf("\n");
 			object[3]=object[0];
 			object[0]=object[2];
 
 			cnt++;
 
 			if (object[0].i_total_digit == 1 && object[0].i_digit[0] == 1) {
-				printf("total_digit %d\n", object[0].i_total_digit);
+				//printf("total_digit %d\n", object[0].i_total_digit);
 				ret[cnt] = '1';
 				break;
 			}else if (object[0].i_total_digit == 1 && object[0].i_digit[0] == 0) {
-				printf("total_digit %d\n", object[0].i_total_digit);
+				//printf("total_digit %d\n", object[0].i_total_digit);
 				ret[cnt] = '0';
 				break;
 			}
@@ -106,6 +187,8 @@ int makeBinary(char input[201], char* ret)
 	}
 	return 0;
 }
+
+
 int enter_number(char *input, struct BigNum *object)
 {
 	int i,j,l;

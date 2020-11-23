@@ -12,6 +12,7 @@ struct BigNum
 	int sign;
 };
 int reverseChar(char* a, int len);
+int makeBigInt(char input[201], char* ret);
 int makeBinary(char input[201], char* ret);
 int enter_number(char* input, struct BigNum* object);
 int compare_number(struct BigNum* object, struct BigNum* object2);
